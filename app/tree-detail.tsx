@@ -12,7 +12,7 @@ type TreeInfo = {
 }
 
 export default function TreeScreen() {
-    const { id } = useLocalSearchParams()
+    const { id, label } = useLocalSearchParams<{ id: string; label: string }>()
     const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
     const getTreeInfo = async () => {
         const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=libellefrancais%2C%20adresse%2C%20espece%2C%20circonferenceencm%2C%20hauteurenm&where=idbase%20%3D%20${id}&limit=20`;
@@ -34,7 +34,7 @@ export default function TreeScreen() {
 
     return (
         <>
-            <Stack.Screen options={{ title: treeInfo ? treeInfo.libellefrancais : "Loading" }} />
+            <Stack.Screen options={{ title: label }} />
             <View style={styles.container}>
                 {
                     treeInfo ? (

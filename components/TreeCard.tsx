@@ -1,5 +1,5 @@
-import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type Props = {
     id: number;
@@ -8,13 +8,23 @@ type Props = {
 }
 
 export default function TreeCard({ id, label, espece }: Props) {
+    const router = useRouter();
+    const openTreeDetail = () => {
+        router.push({
+            pathname: "/tree-detail",
+            params: {
+                id: id,
+                label: label,
+            },
+        })
+    }
     return (
-        <Link href={`/tree/${id}`} style={styles.cardContainer}>
+        <Pressable style={styles.cardContainer} onPress={openTreeDetail}>
             <View style={styles.card}>
                 <Text style={styles.label}>{label ? label : "Inconnu"}</Text>
                 <Text style={styles.espece}>{espece ? espece : "Espèce inconnue"}</Text>
             </View>
-        </Link>
+        </Pressable>
     )
 }
 
@@ -24,7 +34,6 @@ const styles = StyleSheet.create({
         borderColor: "#b1b1b1",
         borderWidth: 1,
         borderRadius: 10,
-        paddingTop: 15,
         width: "95%",
         height: 80,
         shadowColor: "#000",
@@ -33,6 +42,7 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowOpacity: 0.2,
+        justifyContent: "center",
     },
     card: {
         paddingLeft: 20,
