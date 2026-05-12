@@ -7,12 +7,13 @@ import TreeCard from "@/components/TreeCard";
 type Tree = {
   idbase: number;
   libellefrancais: string;
+  espece: string;
 }
 
 export default function Index() {
   const [treeList, setTreeList] = useState<Tree[]>([])
   const getTrees = async () => {
-    const url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais&limit=20";
+    const url = "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20espece&limit=20";
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -37,9 +38,10 @@ export default function Index() {
           {treeList.map((tree)=>{
             return (
               <TreeCard
-              key={tree.idbase}
-              id={tree.idbase}
-              label={tree.libellefrancais}
+                key={tree.idbase}
+                id={tree.idbase}
+                label={tree.libellefrancais}
+                espece={tree.espece}
               />
             )})}
           </View>
@@ -59,6 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 40,
-    gap: 10,
+    gap: 15,
   },
 })
