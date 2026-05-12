@@ -9,23 +9,22 @@ type Props = {
 export default function TreeCard({ id, label }: Props) {
     return (
         <Link href={`/tree/${id}`} style={styles.card}>
-            <Text style={styles.label}>{label}</Text>
+            <Text style={styles.label}>{label ? label : "Inconnu"}</Text>
         </Link>
     )
 }
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: "#fff",
-        borderColor: "#25292e",
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderRadius: 5,
-        margin: 10,
-        padding: 5,
-        width: 200,
-        height: 50,
+        backgroundColor: "#ededed99",
+        borderRadius: 10,
+        paddingTop: 15,
+        width: "95%",
+        height: 60,
+        textAlign: "center",
     },
     label: {
+        fontSize: 25,
+        fontWeight: "bold",
     },
 })

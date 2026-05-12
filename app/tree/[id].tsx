@@ -1,7 +1,7 @@
+import InfoBox from "@/components/InfoBox";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
 
 type TreeInfo = {
     adresse: string;
@@ -40,9 +40,15 @@ export default function TreeScreen() {
                     treeInfo ? (
                         <>
                             <Text style={styles.title}>{treeInfo.libellefrancais}</Text>
-                            <Text>{treeInfo.espece}</Text>
-                            <Text>{String(treeInfo.circonferenceencm)}</Text>
-                            <Text>{String(treeInfo.hauteurenm)}</Text>
+                            <View style={styles.info}>
+                                <InfoBox keyLabel={"Espèce"} valueLabel={treeInfo.espece} />
+                                <View style={styles.separator} />
+                                <InfoBox keyLabel={"Circonférence"} valueLabel={String(treeInfo.circonferenceencm + " cm")} />
+                                <View style={styles.separator} />
+                                <InfoBox keyLabel={"Hauteur"} valueLabel={String(treeInfo.hauteurenm + " m")} />
+                                <View style={styles.separator} />
+                                <InfoBox keyLabel={"Adresse"} valueLabel={String(treeInfo.adresse)} />
+                            </View>
                         </>
                     ) : (
                         <Text>Loading...</Text>
@@ -58,9 +64,21 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         flex: 1,
         flexDirection: "column",
-        alignItems: 'center',
+        alignItems: "center",
     },
     title: {
-        fontSize: 20,
-    }
+        fontWeight: "bold",
+        paddingTop: 10,
+        paddingBottom: 20,
+        fontSize: 40,
+    },
+    info: {
+        alignItems: "center",
+        width: "100%",
+    },
+    separator: {
+        width: "90%",
+        height: 1,
+        backgroundColor: "#d5d5d5",
+    },
 })
