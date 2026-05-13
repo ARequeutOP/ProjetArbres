@@ -41,7 +41,7 @@ export default function TreeScreen() {
 
     return (
         <>
-            <Stack.Screen options={{ title: label }} />
+            <Stack.Screen options={{ title: label ? label : "Inconnu" }} />
             <View style={styles.container}>
                 {
                     treeInfo ? (
