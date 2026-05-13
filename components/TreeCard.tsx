@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         justifyContent: "center",
+        alignSelf: "center",
     },
     card: {
         paddingLeft: 20,
