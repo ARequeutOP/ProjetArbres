@@ -1,50 +1,21 @@
-import { Colors } from "@/colors";
-import InfoBox from "@/components/InfoBox";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
-type TreeInfo = {
-    adresse: string;
-    libellefrancais: string;
-    espece: string;
-    circonferenceencm: number;
-    hauteurenm: number;
-    stadedeveloppement: string;
-    geo_point_2d: {
-        lon: number,
-        lat: number
-        }
-}
+import InfoBox from "@/components/InfoBox";
+import { useTreeInfo } from "@/hooks/useTreeInfo";
+import { Colors } from "@/model/colors";
 
 export default function TreeScreen() {
     const { id, label } = useLocalSearchParams<{ id: string; label: string }>()
-    const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
-    const getTreeInfo = async () => {
-        const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=libellefrancais%2C%20adresse%2C%20espece%2C%20circonferenceencm%2C%20hauteurenm%2C%20stadedeveloppement%2C%20geo_point_2d&where=idbase%20%3D%20${id}&limit=20`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const result = await response.json();
-            setTreeInfo(result.results[0]);
-        } catch(error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(() => {
-        getTreeInfo();
-    }, [])
+    const { treeInfo, isLoading } = useTreeInfo(id);
 
     return (
         <>
             <Stack.Screen options={{ title: label ? label : "Inconnu" }} />
             <View style={styles.container}>
                 {
-                    treeInfo ? (
+                    isLoading || !treeInfo ? <Text>Loading...</Text> : (
                         <>
                             <Text style={styles.title}>{treeInfo.libellefrancais}</Text>
                             <View style={styles.info}>
@@ -76,8 +47,6 @@ export default function TreeScreen() {
                                 </View>
                             </View>
                         </>
-                    ) : (
-                        <Text>Loading...</Text>
                     )
                 }
             </View>

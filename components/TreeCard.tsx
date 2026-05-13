@@ -2,7 +2,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Colors } from "@/colors";
+import { Colors } from "@/model/colors";
 
 type Props = {
     id: number;
