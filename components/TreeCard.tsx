@@ -1,3 +1,4 @@
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -22,6 +23,7 @@ export default function TreeCard({ id, label, espece }: Props) {
     }
     return (
         <Pressable style={styles.cardContainer} onPress={openTreeDetail}>
+            <FontAwesome5 name="tree" size={40} color="black" style={styles.tree}/>
             <View style={styles.card}>
                 <Text style={styles.label}>{label ? label : "Inconnu"}</Text>
                 <Text style={styles.espece}>{espece ? espece : "Espèce inconnue"}</Text>
@@ -44,10 +46,17 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowOpacity: 0.2,
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "flex-start",
         alignSelf: "center",
     },
+    tree: {
+        alignSelf: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
     card: {
+        alignSelf: "center",
         paddingLeft: 20,
         flexDirection: "column",
         gap: 5,
