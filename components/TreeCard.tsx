@@ -1,6 +1,8 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { Colors } from "@/colors";
+
 type Props = {
     id: number;
     label: string;
@@ -30,13 +32,13 @@ export default function TreeCard({ id, label, espece }: Props) {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        backgroundColor: "#fff",
-        borderColor: "#b1b1b1",
+        backgroundColor: Colors.background,
+        borderColor: Colors.border,
         borderWidth: 1,
         borderRadius: 10,
         width: "95%",
         height: 80,
-        shadowColor: "#000",
+        shadowColor: "black",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -53,9 +55,10 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 25,
         fontWeight: "bold",
+        color: Colors.textPrimary,
     },
     espece: {
         fontSize: 15,
-        color: "#707070",
+        color: Colors.textSecondary,
     }
 })

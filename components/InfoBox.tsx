@@ -1,3 +1,4 @@
+import { Colors } from "@/colors";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
@@ -16,11 +17,9 @@ export default function TreeCard({ keyLabel, valueLabel }: Props) {
 
 const styles = StyleSheet.create({
     box: {
-        backgroundColor: "#fff",
-        borderRadius: 5,
-        padding: 5,
+        backgroundColor: Colors.background,
+        padding: 10,
         width: "95%",
-        height: 50,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -29,9 +28,11 @@ const styles = StyleSheet.create({
         width: "40%",
         fontSize: 16,
         fontWeight: "bold",
+        color: Colors.textPrimary,
     },
     valueLabel: {
-        fontSize: 12,
-        width: "50%"
+        fontSize: 14,
+        width: "50%",
+        color: Colors.textPrimary,
     }
 })

@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 import { useRef, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 
+import { Colors } from "@/colors";
 import TreeCard from "@/components/TreeCard";
 
 type Tree = {
@@ -69,7 +70,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
   },
   container: {
     flexDirection: "column",

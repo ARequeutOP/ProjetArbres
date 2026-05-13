@@ -1,3 +1,4 @@
+import { Colors } from "@/colors";
 import InfoBox from "@/components/InfoBox";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -86,13 +87,14 @@ export default function TreeScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#fff",
+        backgroundColor: Colors.background,
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
     },
     title: {
         fontWeight: "bold",
+        color: Colors.textPrimary,
         paddingTop: 10,
         paddingBottom: 20,
         fontSize: 40,
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     separator: {
         width: "90%",
         height: 1,
-        backgroundColor: "#d5d5d5",
+        backgroundColor: Colors.border,
     },
     map: {
         width: "100%",
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: "95%",
         height: "55%",
-        borderColor: "#6c6b6b",
+        borderColor: Colors.primary,
         borderWidth: 2,
         borderRadius: 20,
         overflow: "hidden"
