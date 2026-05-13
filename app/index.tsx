@@ -1,5 +1,6 @@
+import BackToTop from "@/components/BackToTop";
 import { Stack } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 
 import TreeCard from "@/components/TreeCard";
@@ -13,6 +14,12 @@ type Tree = {
 export default function Index() {
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  const flatListRef = useRef(null);
+  const goBackToTop = () => {
+    flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  }
   const getTrees = async () => {
     setIsLoading(true);
     let numberTreesLoaded = treeList.length;
@@ -36,20 +43,25 @@ export default function Index() {
     <>
       <Stack.Screen options={{ title: "Home" }} />
       <FlatList
+        ref={flatListRef}
         data={treeList}
         style={styles.scrollView}
         contentContainerStyle={styles.container}
         keyExtractor={(item) => String(item.idbase)}
         onEndReached={()=>{if (!isLoading) getTrees()}}
         onEndReachedThreshold={0.5}
+        onScroll={(event)=>{
+          setIsScrolled(event.nativeEvent.contentOffset.y > 200);
+        }}
         ListFooterComponent={() => isLoading ? (<Text style={styles.loadingBar}>...</Text>) : null}
         ListEmptyComponent={() => <Text>Aucun résultat</Text>}
         renderItem={({item} : {item: Tree})=><TreeCard
-              id={item.idbase}
-              label={item.libellefrancais}
-              espece={item.espece}
-              />
+        id={item.idbase}
+        label={item.libellefrancais}
+        espece={item.espece}
+        />
       } />
+      {isScrolled && <BackToTop onPress={goBackToTop}/>}
     </>
   );
 }
