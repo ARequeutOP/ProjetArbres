@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     keyLabel: {
+        width: "40%",
         fontSize: 16,
         fontWeight: "bold",
     },
