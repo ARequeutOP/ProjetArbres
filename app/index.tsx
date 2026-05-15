@@ -10,7 +10,7 @@ import { Colors } from "@/model/colors";
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
-  const flatListRef = useRef(null);
+  const flatListRef = useRef<FlatList>(null);
   const goBackToTop = () => {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   }

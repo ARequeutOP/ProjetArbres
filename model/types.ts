@@ -14,3 +14,8 @@ export type TreeInfo = Tree & {
         lat: number
         }
 }
+
+export type TreeService = {
+  getTreeList:  (numberTreesLoaded: number) => Promise<Tree[]>;
+  getTreeInfo:  (id: string) => Promise<TreeInfo>;
+}
