@@ -14,7 +14,7 @@ export default function TreeScreen() {
     return (
         <>
             {error ? <ErrorBox error={error}/> : <>
-            <Stack.Screen options={{ title: label ? label : "Inconnu" }} />
+            <Stack.Screen options={{ title: label ?? "Tree" }} />
             <View style={styles.container}>
                 {
                     isLoading || !treeInfo ? <Text>Loading...</Text> : (

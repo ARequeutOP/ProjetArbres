@@ -1,34 +1,23 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { Colors } from "@/model/colors";
 
 type Props = {
-    id: number;
     label: string;
     espece: string;
 }
 
-export default function TreeCard({ id, label, espece }: Props) {
-    const router = useRouter();
-    const openTreeDetail = () => {
-        router.push({
-            pathname: "/tree-detail",
-            params: {
-                id: id,
-                label: label,
-            },
-        })
-    }
+export default function TreeCard({ label, espece }: Props) {
+    
     return (
-        <Pressable style={styles.cardContainer} onPress={openTreeDetail}>
+        <View style={styles.cardContainer}>
             <FontAwesome5 name="tree" size={40} color="black" style={styles.tree}/>
             <View style={styles.card}>
                 <Text style={styles.label}>{label ? label : "Inconnu"}</Text>
                 <Text style={styles.espece}>{espece ? espece : "Espèce inconnue"}</Text>
             </View>
-        </Pressable>
+        </View>
     )
 }
 

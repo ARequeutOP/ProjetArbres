@@ -11,5 +11,8 @@ export default function RootLayout() {
         headerTitleStyle: {
           fontWeight: 'bold',
         },
-      }} />
+      }} >        
+        <Stack.Screen name="index" options={{ title: "Home" }} />
+        <Stack.Screen name="tree-detail" options={{ title: "Tree" }} />
+      </Stack>
 }
