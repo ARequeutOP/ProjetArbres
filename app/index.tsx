@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 
 import BackToTop from "@/components/BackToTop";
+import ErrorBox from "@/components/ErrorBox";
 import TreeCard from "@/components/TreeCard";
 import { useTreeList } from "@/hooks/useTreeList";
 import { Colors } from "@/model/colors";
@@ -15,11 +16,12 @@ export default function Index() {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   }
   
-  const { treeList, isLoading, getTrees } = useTreeList();
+  const { treeList, isLoading, getTrees, error } = useTreeList();
 
   return (
     <>
       <Stack.Screen options={{ title: "Home" }} />
+      {error ? <ErrorBox error={error}/> :
       <FlatList
         ref={flatListRef}
         data={treeList}
@@ -34,11 +36,12 @@ export default function Index() {
         ListFooterComponent={() => isLoading ? (<Text style={styles.loadingBar}>...</Text>) : null}
         ListEmptyComponent={() => <Text>Aucun résultat</Text>}
         renderItem={({item})=><TreeCard
-        id={item.idbase}
-        label={item.libellefrancais}
-        espece={item.espece}
-        />
-      } />
+          id={item.idbase}
+          label={item.libellefrancais}
+          espece={item.espece}
+          />
+        }
+      />}
       {isScrolled && <BackToTop onPress={goBackToTop}/>}
     </>
   );

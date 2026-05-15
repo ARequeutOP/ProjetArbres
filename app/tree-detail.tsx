@@ -2,16 +2,18 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
+import ErrorBox from "@/components/ErrorBox";
 import InfoBox from "@/components/InfoBox";
 import { useTreeInfo } from "@/hooks/useTreeInfo";
 import { Colors } from "@/model/colors";
 
 export default function TreeScreen() {
     const { id, label } = useLocalSearchParams<{ id: string; label: string }>()
-    const { treeInfo, isLoading } = useTreeInfo(id);
+    const { treeInfo, isLoading, error } = useTreeInfo(id);
 
     return (
         <>
+            {error ? <ErrorBox error={error}/> : <>
             <Stack.Screen options={{ title: label ? label : "Inconnu" }} />
             <View style={styles.container}>
                 {
@@ -49,7 +51,7 @@ export default function TreeScreen() {
                         </>
                     )
                 }
-            </View>
+            </View></>}
         </>
     )
 }
