@@ -1,5 +1,5 @@
 import { MOCK_ERROR, MOCK_TIMEOUT } from "@/config/mock";
-import { TreeService } from "@/model/types";
+import { TreeService } from "./treeService";
 
 const MOCK_TREE_INFO = {
     idbase: 1,

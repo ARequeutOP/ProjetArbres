@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { TreeInfo } from "@/model/types";
-import { service } from "@/services";
+import { TreeServiceContext } from "@/services/treeServiceContext";
+
 
 export const useTreeInfo = (id: string) => {
+    const service = useContext(TreeServiceContext);
     const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
