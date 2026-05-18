@@ -1,14 +1,16 @@
-import { Colors } from "@/model/colors";
-// import { mockTreeService } from "@/services/mockTreeService";
-import { TreeServiceContext } from "@/services/treeServiceContext";
-import { treeServiceImpl } from "@/services/treeServiceImpl";
+import { Colors } from "@/src/colors";
+import { TreeRepositoryContext } from "@/src/presentation/context/TreeRepositoryContext";
 import { Stack } from "expo-router";
 
+import { TreeRepositoryImpl } from "@/src/data/repositories/TreeRepositoryImpl";
+const repository = new TreeRepositoryImpl();
+
+// import { MockTreeRepository } from "@/data/repositories/MockTreeRepository";
+// const repository = new MockTreeRepository();
 
 export default function RootLayout() {
   return (
-    <TreeServiceContext value={treeServiceImpl}>
-    {/* <TreeServiceContext value={mockTreeService}> */}
+    <TreeRepositoryContext value={repository}>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -22,6 +24,6 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: "Home" }} />
         <Stack.Screen name="tree-detail" options={{ title: "Tree" }} />
       </Stack>
-    </TreeServiceContext>
+    </TreeRepositoryContext>
   )
 }

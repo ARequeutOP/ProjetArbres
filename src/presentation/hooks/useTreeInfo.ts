@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 
-import { TreeInfo } from "@/model/types";
-import { TreeServiceContext } from "@/services/treeServiceContext";
-
+import { TreeInfo } from "@/src/domain/entities/Tree";
+import { TreeRepositoryContext } from "../context/TreeRepositoryContext";
 
 export const useTreeInfo = (id: string) => {
-    const service = useContext(TreeServiceContext);
+    const repository = useContext(TreeRepositoryContext);
     const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
@@ -14,7 +13,7 @@ export const useTreeInfo = (id: string) => {
         setIsLoading(true);
         setError(null);
         try {
-            const data = await service.getTreeInfo(id);
+            const data = await repository.getTreeInfo(id);
             setTreeInfo(data);
         } catch(error) {
             if (error instanceof Error) setError(error);

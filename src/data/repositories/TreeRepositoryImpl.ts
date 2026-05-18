@@ -1,9 +1,9 @@
-import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
-import { handleError } from "@/utils/handleError";
-import { TreeService } from "./treeService";
+import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
+import { fetchWithTimeout } from "@/src/utils/fetchWithTimeout";
+import { handleError } from "@/src/utils/handleError";
 
-export const treeServiceImpl: TreeService = {
-    getTreeInfo: async (id) => {
+export class TreeRepositoryImpl implements ITreeRepository {
+    async getTreeInfo(id: string) {
         try {
             const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20adresse%2C%20espece%2C%20circonferenceencm%2C%20hauteurenm%2C%20stadedeveloppement%2C%20geo_point_2d&where=idbase%20%3D%20${id}&limit=20`;
             const response = await fetchWithTimeout(url, 5000);
@@ -16,8 +16,8 @@ export const treeServiceImpl: TreeService = {
         } catch (error) {
             handleError(error);
         }
-    },
-    getTreeList: async (numberTreesLoaded) => {
+    }
+    async getTreeList(numberTreesLoaded: number) {
         try {
             const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20espece&limit=20&offset=${numberTreesLoaded}`;
             const response = await fetchWithTimeout(url, 5000);

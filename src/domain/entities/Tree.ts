@@ -1,10 +1,10 @@
-export type Tree = {
+export interface Tree {
   idbase: number;
   libellefrancais: string;
   espece: string;
 }
 
-export type TreeInfo = Tree & {
+export interface TreeInfo extends Tree{
     adresse: string;
     circonferenceencm: number;
     hauteurenm: number;

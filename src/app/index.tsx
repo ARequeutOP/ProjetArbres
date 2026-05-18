@@ -2,11 +2,11 @@ import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text } from "react-native";
 
-import BackToTop from "@/components/BackToTop";
-import ErrorBox from "@/components/ErrorBox";
-import TreeCard from "@/components/TreeCard";
-import { useTreeList } from "@/hooks/useTreeList";
-import { Colors } from "@/model/colors";
+import { Colors } from "@/src/colors";
+import BackToTop from "@/src/presentation/components/BackToTop";
+import ErrorBox from "@/src/presentation/components/ErrorBox";
+import TreeCard from "@/src/presentation/components/TreeCard";
+import { useTreeList } from "@/src/presentation/hooks/useTreeList";
 
 export default function Index() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);

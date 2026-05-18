@@ -1,5 +1,5 @@
-import { MOCK_ERROR, MOCK_TIMEOUT } from "@/config/mock";
-import { TreeService } from "./treeService";
+import { MOCK_ERROR, MOCK_TIMEOUT } from "@/src/config/mock";
+import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
 
 const MOCK_TREE_INFO = {
     idbase: 1,
@@ -27,15 +27,15 @@ const MOCK_TREE_LIST = [
         }
 ];
 
-export const mockTreeService: TreeService = {
-    getTreeInfo: async (id) => {
+export class MockTreeRepository implements ITreeRepository {
+    async getTreeInfo(id: string) {
         if (MOCK_ERROR) throw new Error("Issue with the network");
         if (MOCK_TIMEOUT) throw new Error("Query took too long!");
         return MOCK_TREE_INFO;
-    },
-    getTreeList: async (numberTreesLoaded) => {
+    }
+    async getTreeList(numberTreesLoaded: number) {
         if (MOCK_ERROR) throw new Error("Issue with the network");
         if (MOCK_TIMEOUT) throw new Error("Query took too long!");
         return MOCK_TREE_LIST;
-    },
+    }
 }

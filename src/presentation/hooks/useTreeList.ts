@@ -1,10 +1,10 @@
-import { TreeServiceContext } from "@/services/treeServiceContext";
 import { useContext, useState } from "react";
+import { TreeRepositoryContext } from "../context/TreeRepositoryContext";
 
-import { Tree } from "@/model/types";
+import { Tree } from "@/src/domain/entities/Tree";
 
 export const useTreeList = () => {
-  const service = useContext(TreeServiceContext);
+  const repository = useContext(TreeRepositoryContext);
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
@@ -15,7 +15,7 @@ export const useTreeList = () => {
     setIsLoading(true);
     let numberTreesLoaded = treeList.length;
     try {
-      const data = await service.getTreeList(numberTreesLoaded);
+      const data = await repository.getTreeList(numberTreesLoaded);
       setTreeList(prev => [...prev, ...data]);
     } catch(error) {
       if (error instanceof Error) setError(error);
