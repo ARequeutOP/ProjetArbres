@@ -1,3 +1,4 @@
+import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
 import { useContext, useState } from "react";
 import { TreeRepositoryContext } from "../context/TreeRepositoryContext";
 
@@ -8,13 +9,14 @@ export const useTreeList = () => {
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DEFAULT)
   
   const fetchTrees = async () => {
     setError(null);
     setIsLoading(true);
     let numberTreesLoaded = treeList.length;
     try {
-      const data = await repository.getTreeList(numberTreesLoaded);
+      const data = await repository.getTreeList( { numberTreesLoaded, sortOrder } );
       setTreeList(prev => [...prev, ...data]);
     } catch(error) {
       setError(error);
@@ -33,5 +35,14 @@ export const useTreeList = () => {
     fetchTrees();
   }
 
-  return { treeList, isLoading, loadMoreTrees, retryGetTrees, error };
+  const updateSortOrder = () => {
+        setTreeList([]);
+        if (sortOrder === SortOrder.ASC) {
+            setSortOrder(SortOrder.DESC);
+        } else {
+            setSortOrder(SortOrder.ASC);
+        }
+    }
+
+  return { treeList, isLoading, sortOrder, updateSortOrder, loadMoreTrees, retryGetTrees, error };
 }

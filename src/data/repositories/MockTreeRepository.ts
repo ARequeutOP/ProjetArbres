@@ -3,6 +3,7 @@ import { ApiError } from "@/src/core/errors/ApiError";
 import { NetworkError } from "@/src/core/errors/NetworkError";
 import { TimeoutError } from "@/src/core/errors/TimeoutError";
 import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
+import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
 
 const MOCK_TREE_INFO = {
     idbase: 1,
@@ -37,7 +38,7 @@ export class MockTreeRepository implements ITreeRepository {
         if (MOCK_API_ERROR) throw new ApiError("Tree Not Found", 404);
         return MOCK_TREE_INFO;
     }
-    async getTreeList(numberTreesLoaded: number) {
+    async getTreeList(params: GetTreeListParams) {
         if (MOCK_NETWORK_ERROR) throw new NetworkError();
         if (MOCK_TIMEOUT) throw new TimeoutError();
         if (MOCK_API_ERROR) throw new ApiError("API not found", 404);

@@ -1,6 +1,7 @@
 import { Tree, TreeInfo } from "@/src/domain/entities/Tree";
+import { GetTreeListParams } from "../usecases/types/GetTreeListParams";
 
 export interface ITreeRepository {
-    getTreeList(numberTreesLoaded: number): Promise<Tree[]>;
+    getTreeList(params: GetTreeListParams): Promise<Tree[]>;
     getTreeInfo(id: string): Promise<TreeInfo>;
 }

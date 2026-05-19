@@ -1,6 +1,7 @@
 import { ApiError } from "@/src/core/errors/ApiError";
 import { fetchWithTimeout } from "@/src/data/fetchWithTimeout";
 import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
+import { GetTreeListParams, SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
 
 export class TreeRepositoryImpl implements ITreeRepository {
     async getTreeInfo(id: string) {
@@ -15,8 +16,17 @@ export class TreeRepositoryImpl implements ITreeRepository {
         }
         throw new ApiError("Tree Not Found", 404);
     }
-    async getTreeList(numberTreesLoaded: number) {
-        const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20espece&limit=20&offset=${numberTreesLoaded}`;
+    async getTreeList(params: GetTreeListParams) {
+        let orderUrlString = "";
+        switch (params.sortOrder) {
+            case (SortOrder.ASC):
+                orderUrlString = "order_by=libellefrancais%20asc&";
+                break;
+            case (SortOrder.DESC):
+                orderUrlString = "order_by=libellefrancais%20desc&";
+                break;
+        }
+        const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20espece&limit=20&${orderUrlString}offset=${params.numberTreesLoaded}`;
         const response = await fetchWithTimeout(url, 5000);
         if (!response.ok) {
             throw new ApiError("API Request Failed", response.status);

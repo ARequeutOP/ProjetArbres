@@ -1,12 +1,14 @@
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import { FlatList, Pressable, StyleSheet, Text } from "react-native";
+import { FlatList, Pressable, StyleSheet, View } from "react-native";
 
 import { Colors } from "@/src/core/colors";
 import BackToTop from "@/src/presentation/components/BackToTop";
 import TreeCard from "@/src/presentation/components/TreeCard";
 import { useTreeList } from "@/src/presentation/hooks/useTreeList";
 import LoadingFooter from "../components/LoadingFooter";
+import SearchBar from "../components/SearchBar";
+import SortBox from "../components/SortBox";
 
 export default function HomeScreen() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -16,7 +18,7 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   }
   
-  const { treeList, isLoading, loadMoreTrees, retryGetTrees, error } = useTreeList();
+  const { treeList, isLoading, sortOrder, updateSortOrder, loadMoreTrees, retryGetTrees, error } = useTreeList();
 
   const router = useRouter();
   const openTreeDetail = (id: string, label: string) => {
@@ -32,6 +34,12 @@ export default function HomeScreen() {
   return (
     <>
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.headerContainer}>
+            <SearchBar />
+            <SortBox sortOrder={sortOrder} updateSortOrder={updateSortOrder} />
+          </View>
+        }
         ref={flatListRef}
         data={treeList}
         style={styles.scrollView}
@@ -43,7 +51,6 @@ export default function HomeScreen() {
           setIsScrolled(event.nativeEvent.contentOffset.y > 200);
         }}
         ListFooterComponent={() => <LoadingFooter error={error} isLoading={isLoading} onRetry={retryGetTrees}/>}
-        ListEmptyComponent={() => <Text>Aucun résultat</Text>}
         renderItem={({item})=>
           <Pressable onPress={() => openTreeDetail(item.idbase, item.libellefrancais)}>
             <TreeCard
@@ -68,5 +75,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 40,
     gap: 15,
+  },
+  headerContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 })
