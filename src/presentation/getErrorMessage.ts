@@ -1,6 +1,6 @@
-import { ApiError } from "../errors/ApiError";
-import { NetworkError } from "../errors/NetworkError";
-import { TimeoutError } from "../errors/TimeoutError";
+import { ApiError } from "@/src/core/errors/ApiError";
+import { NetworkError } from "@/src/core/errors/NetworkError";
+import { TimeoutError } from "@/src/core/errors/TimeoutError";
 
 export const getErrorMessage = (error: unknown) => {
     if (error instanceof TimeoutError) {

@@ -1,5 +1,5 @@
-import { NetworkError } from "../errors/NetworkError";
-import { TimeoutError } from "../errors/TimeoutError";
+import { NetworkError } from "@/src/core/errors/NetworkError";
+import { TimeoutError } from "@/src/core/errors/TimeoutError";
 
 export const fetchWithTimeout = async ( url: string, delay: number ) => {
     const controller = new AbortController();

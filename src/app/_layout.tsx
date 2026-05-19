@@ -5,7 +5,7 @@ import { Stack } from "expo-router";
 import { TreeRepositoryImpl } from "@/src/data/repositories/TreeRepositoryImpl";
 const repository = new TreeRepositoryImpl();
 
-// import { MockTreeRepository } from "@/data/repositories/MockTreeRepository";
+// import { MockTreeRepository } from "@/src/data/repositories/MockTreeRepository";
 // const repository = new MockTreeRepository();
 
 export default function RootLayout() {

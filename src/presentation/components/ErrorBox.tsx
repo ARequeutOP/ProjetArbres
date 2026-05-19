@@ -1,5 +1,5 @@
 import { Colors } from "@/src/core/colors";
-import { getErrorMessage } from "@/src/core/utils/getErrorMessage";
+import { getErrorMessage } from "@/src/presentation/getErrorMessage";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     box: {
         backgroundColor: Colors.background,
         padding: 10,
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
     },

@@ -9,8 +9,7 @@ export const useTreeList = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
   
-  const getTrees = async () => {
-    if (isLoading) return;
+  const fetchTrees = async () => {
     setError(null);
     setIsLoading(true);
     let numberTreesLoaded = treeList.length;
@@ -22,6 +21,17 @@ export const useTreeList = () => {
     } finally {
       setIsLoading(false);
     }
-  }  
-  return { treeList, isLoading, getTrees, error };
+  }
+
+  const loadMoreTrees = async () => {
+    if (isLoading || error) return;
+    fetchTrees();
+  }
+
+  const retryGetTrees = async () => {
+    if (isLoading) return;
+    fetchTrees();
+  }
+
+  return { treeList, isLoading, loadMoreTrees, retryGetTrees, error };
 }

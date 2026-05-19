@@ -1,6 +1,6 @@
 import { Colors } from "@/src/core/colors";
 import { Stack } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import ErrorBox from "../components/ErrorBox";
 import InfoBox from "../components/InfoBox";
@@ -20,7 +20,7 @@ export default function TreeDetailScreen( { id, label }: Props) {
             <Stack.Screen options={{ title: label ?? "Tree" }} />
             <View style={styles.container}>
                 {
-                    isLoading || !treeInfo ? <Text>Loading...</Text> : (
+                    isLoading || !treeInfo ? <View  style={styles.spinnerContainer}><ActivityIndicator size="large" color={Colors.textPrimary}/></View> : (
                         <>
                             <Text style={styles.title}>{treeInfo.libellefrancais}</Text>
                             <View style={styles.info}>
@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "center",
+    },
+    spinnerContainer: {
+        flex: 1,
+        justifyContent: "center",
     },
     title: {
         fontWeight: "bold",

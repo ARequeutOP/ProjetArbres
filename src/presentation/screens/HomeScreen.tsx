@@ -4,9 +4,9 @@ import { FlatList, Pressable, StyleSheet, Text } from "react-native";
 
 import { Colors } from "@/src/core/colors";
 import BackToTop from "@/src/presentation/components/BackToTop";
-import ErrorBox from "@/src/presentation/components/ErrorBox";
 import TreeCard from "@/src/presentation/components/TreeCard";
 import { useTreeList } from "@/src/presentation/hooks/useTreeList";
+import LoadingFooter from "../components/LoadingFooter";
 
 export default function HomeScreen() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -16,7 +16,7 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   }
   
-  const { treeList, isLoading, getTrees, error } = useTreeList();
+  const { treeList, isLoading, loadMoreTrees, retryGetTrees, error } = useTreeList();
 
   const router = useRouter();
   const openTreeDetail = (id: string, label: string) => {
@@ -31,19 +31,18 @@ export default function HomeScreen() {
 
   return (
     <>
-      {error ? <ErrorBox error={error}/> :
       <FlatList
         ref={flatListRef}
         data={treeList}
         style={styles.scrollView}
         contentContainerStyle={styles.container}
         keyExtractor={(item) => String(item.idbase)}
-        onEndReached={getTrees}
+        onEndReached={loadMoreTrees}
         onEndReachedThreshold={0.5}
         onScroll={(event)=>{
           setIsScrolled(event.nativeEvent.contentOffset.y > 200);
         }}
-        ListFooterComponent={() => isLoading ? (<Text style={styles.loadingBar}>...</Text>) : null}
+        ListFooterComponent={() => <LoadingFooter error={error} isLoading={isLoading} onRetry={retryGetTrees}/>}
         ListEmptyComponent={() => <Text>Aucun résultat</Text>}
         renderItem={({item})=>
           <Pressable onPress={() => openTreeDetail(item.idbase, item.libellefrancais)}>
@@ -53,7 +52,7 @@ export default function HomeScreen() {
             />
           </Pressable>
         }
-      />}
+      />
       {isScrolled && <BackToTop onPress={goBackToTop}/>}
     </>
   );
@@ -70,9 +69,4 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     gap: 15,
   },
-
-  loadingBar: {
-    alignSelf: "center",
-    fontSize: 30,
-  }
 })

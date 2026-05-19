@@ -1,5 +1,5 @@
 import { ApiError } from "@/src/core/errors/ApiError";
-import { fetchWithTimeout } from "@/src/core/utils/fetchWithTimeout";
+import { fetchWithTimeout } from "@/src/data/fetchWithTimeout";
 import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
 
 export class TreeRepositoryImpl implements ITreeRepository {
