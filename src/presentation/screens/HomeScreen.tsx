@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text } from "react-native";
 
-import { Colors } from "@/src/colors";
+import { Colors } from "@/src/core/colors";
 import BackToTop from "@/src/presentation/components/BackToTop";
 import ErrorBox from "@/src/presentation/components/ErrorBox";
 import TreeCard from "@/src/presentation/components/TreeCard";

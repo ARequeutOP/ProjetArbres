@@ -1,4 +1,4 @@
-import { Colors } from "@/src/colors";
+import { Colors } from "@/src/core/colors";
 import { Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";

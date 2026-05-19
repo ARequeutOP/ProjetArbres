@@ -1,14 +1,16 @@
-import { Colors } from "@/src/colors";
+import { Colors } from "@/src/core/colors";
+import { getErrorMessage } from "@/src/core/utils/getErrorMessage";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {
-    error: Error;
+    error: unknown;
 }
 
 export default function ErrorBox({ error }: Props) {
+    const message = getErrorMessage(error);
     return (
         <View style={styles.box}>
-            <Text style={styles.label}>Error: {error.message}</Text>
+            <Text style={styles.label}>{message}</Text>
         </View>
     )
 }
@@ -17,12 +19,12 @@ const styles = StyleSheet.create({
     box: {
         backgroundColor: Colors.background,
         padding: 10,
-        width: "100%",
-        height: "100%",
+        flex: 1,
+        justifyContent: "center",
         alignItems: "center",
     },
     label: {
-        fontSize: 35,
+        fontSize: 16,
         fontWeight: "bold",
         color: Colors.textPrimary,
     },

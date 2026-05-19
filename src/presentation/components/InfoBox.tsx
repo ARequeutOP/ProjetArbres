@@ -1,4 +1,4 @@
-import { Colors } from "@/src/colors";
+import { Colors } from "@/src/core/colors";
 import { StyleSheet, Text, View } from "react-native";
 
 type Props = {

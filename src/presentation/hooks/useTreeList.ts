@@ -7,7 +7,7 @@ export const useTreeList = () => {
   const repository = useContext(TreeRepositoryContext);
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<unknown>(null);
   
   const getTrees = async () => {
     if (isLoading) return;
@@ -18,7 +18,7 @@ export const useTreeList = () => {
       const data = await repository.getTreeList(numberTreesLoaded);
       setTreeList(prev => [...prev, ...data]);
     } catch(error) {
-      if (error instanceof Error) setError(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }

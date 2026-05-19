@@ -7,7 +7,7 @@ export const useTreeInfo = (id: string) => {
     const repository = useContext(TreeRepositoryContext);
     const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<Error | null>(null);
+    const [error, setError] = useState<unknown>(null);
 
     const getTreeInfo = async () => {
         setIsLoading(true);
@@ -16,12 +16,12 @@ export const useTreeInfo = (id: string) => {
             const data = await repository.getTreeInfo(id);
             setTreeInfo(data);
         } catch(error) {
-            if (error instanceof Error) setError(error);
+            setError(error);
         } finally {
             setIsLoading(false);
         }
     }
 
-    useEffect(()=>{getTreeInfo()},[]);
+    useEffect(()=>{getTreeInfo()},[id]);
     return { treeInfo, isLoading, error};
 }

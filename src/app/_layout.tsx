@@ -1,4 +1,4 @@
-import { Colors } from "@/src/colors";
+import { Colors } from "@/src/core/colors";
 import { TreeRepositoryContext } from "@/src/presentation/context/TreeRepositoryContext";
 import { Stack } from "expo-router";
 
