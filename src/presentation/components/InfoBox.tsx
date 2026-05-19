@@ -6,7 +6,7 @@ type Props = {
     valueLabel: string;
 }
 
-export default function TreeCard({ keyLabel, valueLabel }: Props) {
+export default function InfoBox({ keyLabel, valueLabel }: Props) {
     return (
         <View style={styles.box}>
             <Text style={styles.keyLabel}>{keyLabel}</Text>
