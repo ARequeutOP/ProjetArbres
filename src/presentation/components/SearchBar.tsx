@@ -6,7 +6,7 @@ export default function SearchBar() {
     return (
         <View style={styles.container}>
             <Entypo name="magnifying-glass" size={24} color="black" />
-            <TextInput style={styles.textInput}>Search...</TextInput>
+            <TextInput placeholder={"Rechercher..."} style={styles.textInput} />
         </View>
     )
 }
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     container: {
         paddingLeft: 5,
         backgroundColor: Colors.background,
-        borderColor: Colors.border,
+        borderColor: Colors.primary,
         borderWidth: 3,
         borderRadius: 10,
         flexDirection: "row",
@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     textInput: {
-        fontSize: 20,
+        flex: 1,
+        height: 50,
+        fontSize: 18,
         color: Colors.primary,
     }
 })

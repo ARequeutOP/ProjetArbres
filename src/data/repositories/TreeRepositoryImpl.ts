@@ -1,37 +1,46 @@
-import { ApiError } from "@/src/core/errors/ApiError";
-import { fetchWithTimeout } from "@/src/data/fetchWithTimeout";
-import { ITreeRepository } from "@/src/domain/repositories/TreeRepository";
-import { GetTreeListParams, SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
+import { TreeNotFoundError } from "@/src/core/errors/TreeNotFoundError";
+import { Tree, TreeInfo } from "@/src/domain/entities/Tree";
+import { ITreeRepository } from "@/src/domain/repositories/ITreeRepository";
+import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
+import { ITreeDataSource } from "../datasources/ITreeDataSource";
 
 export class TreeRepositoryImpl implements ITreeRepository {
-    async getTreeInfo(id: string) {
-        const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20adresse%2C%20espece%2C%20circonferenceencm%2C%20hauteurenm%2C%20stadedeveloppement%2C%20geo_point_2d&where=idbase%20%3D%20${id}&limit=20`;
-        const response = await fetchWithTimeout(url, 5000);
-        if (!response.ok) {
-            throw new ApiError("API Request Failed", response.status);
+    constructor(private treeDatasource: ITreeDataSource) {}
+
+    async getTreeInfo(id: string): Promise<TreeInfo> {
+        const result = await this.treeDatasource.fetchTreeById(id);
+        
+        if (!Array.isArray(result.results) || result.results.length === 0) {
+            throw new TreeNotFoundError();
         }
-        const result = await response.json();
-        if (Array.isArray(result.results) && result.results.length) {
-            return result.results[0];
-        }
-        throw new ApiError("Tree Not Found", 404);
+        const dto = result.results[0];
+
+        return {
+            idbase: dto.idbase,
+            adresse: dto.adresse ?? "",
+            libellefrancais: dto.libellefrancais ?? "",
+            espece: dto.espece ?? "",
+            circonferenceencm: dto.circonferenceencm ?? 0,
+            hauteurenm: dto.hauteurenm ?? 0,
+            stadedeveloppement: dto.stadedeveloppement ?? "",
+            geo_point_2d: dto.geo_point_2d ?? {
+                lon: 0,
+                lat: 0,
+            },
+        };
     }
-    async getTreeList(params: GetTreeListParams) {
-        let orderUrlString = "";
-        switch (params.sortOrder) {
-            case (SortOrder.ASC):
-                orderUrlString = "order_by=libellefrancais%20asc&";
-                break;
-            case (SortOrder.DESC):
-                orderUrlString = "order_by=libellefrancais%20desc&";
-                break;
-        }
-        const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records?select=idbase%2C%20libellefrancais%2C%20espece&limit=20&${orderUrlString}offset=${params.numberTreesLoaded}`;
-        const response = await fetchWithTimeout(url, 5000);
-        if (!response.ok) {
-            throw new ApiError("API Request Failed", response.status);
-        }
-        const result = await response.json();
-        return result.results;
+
+    async getTreeList(params: GetTreeListParams): Promise<Tree[]> {
+        const result = await this.treeDatasource.fetchTrees({
+            offset: params.numberTreesLoaded,
+            sortOrder: params.sortOrder,
+            limit: 20,
+        });
+
+        return result.results.map((dto) => ({
+            idbase: dto.idbase,
+            libellefrancais: dto.libellefrancais ?? "",
+            espece: dto.espece ?? "",
+        }));
     }
 }

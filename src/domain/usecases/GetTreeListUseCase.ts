@@ -1,5 +1,5 @@
 import { Tree } from "../entities/Tree";
-import { ITreeRepository } from "../repositories/TreeRepository";
+import { ITreeRepository } from "../repositories/ITreeRepository";
 import { GetTreeListParams } from "./types/GetTreeListParams";
 
 export class GetTreeListUseCase {
