@@ -10,6 +10,9 @@ export const getErrorMessage = (error: unknown) => {
     if (error instanceof NetworkError) {
         return "Vérifiez votre connexion internet !";
     }
+    if (error instanceof ApiError && error.statusCode === 400) {
+        return "Trop de requêtes!";
+    }
     if (error instanceof ApiError && error.statusCode === 404) {
         return "La page est introuvable !";
     }

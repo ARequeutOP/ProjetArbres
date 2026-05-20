@@ -1,5 +1,5 @@
 import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TreeRepositoryContext } from "../context/TreeRepositoryContext";
 
 import { Tree } from "@/src/domain/entities/Tree";
@@ -9,15 +9,19 @@ export const useTreeList = () => {
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DEFAULT)
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DEFAULT);
+  const [searchText, setSearchText] = useState<string>("");
+  const [hasLoadedOnce, setHasLoadedOnce] = useState<boolean>(false);
+  const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
   
-  const fetchTrees = async () => {
+  const fetchTrees = async (numberTreesLoaded: number, replace: boolean) => {
+    if (replace) setTreeList([]);
     setError(null);
     setIsLoading(true);
-    let numberTreesLoaded = treeList.length;
     try {
-      const data = await repository.getTreeList( { numberTreesLoaded, sortOrder } );
-      setTreeList(prev => [...prev, ...data]);
+      const data = await repository.getTreeList( { numberTreesLoaded, sortOrder, searchText } );
+      setTreeList(prev => [...prev, ...data.treeList]);
+      setHasReachedEnd(treeList.length < data.total_count)
     } catch(error) {
       setError(error);
     } finally {
@@ -26,17 +30,16 @@ export const useTreeList = () => {
   }
 
   const loadMoreTrees = async () => {
-    if (isLoading || error) return;
-    fetchTrees();
+    if (!hasLoadedOnce || !hasReachedEnd || isLoading || error) return;
+    fetchTrees(treeList.length, false);
   }
 
   const retryGetTrees = async () => {
     if (isLoading) return;
-    fetchTrees();
+    fetchTrees(treeList.length, false);
   }
 
   const updateSortOrder = () => {
-        setTreeList([]);
         if (sortOrder === SortOrder.ASC) {
             setSortOrder(SortOrder.DESC);
         } else {
@@ -44,5 +47,14 @@ export const useTreeList = () => {
         }
     }
 
-  return { treeList, isLoading, sortOrder, updateSortOrder, loadMoreTrees, retryGetTrees, error };
+  const refresh = () => {
+      fetchTrees(0, true);
+    }
+
+  useEffect(() => {
+      refresh();
+      setHasLoadedOnce(true);
+    }, [sortOrder, searchText]);
+
+  return { treeList, isLoading, sortOrder, updateSortOrder, setSearchText, loadMoreTrees, retryGetTrees, error };
 }

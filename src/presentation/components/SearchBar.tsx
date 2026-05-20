@@ -1,12 +1,20 @@
 import { Colors } from '@/src/core/colors';
 import Entypo from '@expo/vector-icons/Entypo';
-import { StyleSheet, TextInput, View } from "react-native";
+import { useState } from 'react';
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 
-export default function SearchBar() {
+type Props = {
+    setSearchText: (searchText: string) => void;
+}
+
+export default function SearchBar( {setSearchText}: Props ) {
+    const [localSearchText,setLocalSearchText] = useState("");
     return (
         <View style={styles.container}>
-            <Entypo name="magnifying-glass" size={24} color="black" />
-            <TextInput placeholder={"Rechercher..."} style={styles.textInput} />
+            <Pressable onPress={()=>setSearchText(localSearchText)}>
+                <Entypo name="magnifying-glass" size={24} color="black" />
+            </Pressable>
+            <TextInput placeholder={"Rechercher..."} style={styles.textInput} value={localSearchText} onChangeText={setLocalSearchText}/>
         </View>
     )
 }

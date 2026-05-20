@@ -33,6 +33,11 @@ export class TreeApiDatasource implements ITreeDataSource {
                 break;
         }
 
+        const searchTextUrlString =
+            queryParams.searchText !== undefined && queryParams.searchText !== ""
+            ? `&where=search(libellefrancais,%20"${queryParams.searchText}")`
+            : "";
+
         const offsetUrlString =
             queryParams.offset !== undefined
             ? `&offset=${queryParams.offset}`
@@ -41,9 +46,10 @@ export class TreeApiDatasource implements ITreeDataSource {
         const url =
             `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records`+
             `?select=idbase%2C%20libellefrancais%2C%20espece`+
+            searchTextUrlString+
             `&limit=${queryParams.limit}`+
-            `${orderUrlString}`+
-            `${offsetUrlString}`;
+            orderUrlString+
+            offsetUrlString;
         
         const response = await fetchWithTimeout(url, 5000);
         if (!response.ok) {

@@ -1,6 +1,7 @@
 import { TreeNotFoundError } from "@/src/core/errors/TreeNotFoundError";
-import { Tree, TreeInfo } from "@/src/domain/entities/Tree";
+import { TreeInfo } from "@/src/domain/entities/Tree";
 import { ITreeRepository } from "@/src/domain/repositories/ITreeRepository";
+import { TreeListResult } from "@/src/domain/types/TreeListResult";
 import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
 import { ITreeDataSource } from "../datasources/ITreeDataSource";
 
@@ -30,17 +31,22 @@ export class TreeRepositoryImpl implements ITreeRepository {
         };
     }
 
-    async getTreeList(params: GetTreeListParams): Promise<Tree[]> {
+    async getTreeList(params: GetTreeListParams): Promise<TreeListResult> {
         const result = await this.treeDatasource.fetchTrees({
             offset: params.numberTreesLoaded,
             sortOrder: params.sortOrder,
+            searchText: params.searchText,
             limit: 20,
         });
 
-        return result.results.map((dto) => ({
-            idbase: dto.idbase,
-            libellefrancais: dto.libellefrancais ?? "",
-            espece: dto.espece ?? "",
-        }));
+        return {
+            total_count: result.total_count,
+            treeList: 
+            result.results.map((dto) => ({
+                idbase: dto.idbase,
+                libellefrancais: dto.libellefrancais ?? "",
+                espece: dto.espece ?? "",
+            }))
+        };
     }
 }

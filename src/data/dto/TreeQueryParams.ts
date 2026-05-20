@@ -4,4 +4,5 @@ export type TreeQueryParams = {
     offset?: number;
     sortOrder?: SortOrder;
     limit?: number;
+    searchText?: string;
 }

@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Colors } from "@/src/core/colors";
 import BackToTop from "@/src/presentation/components/BackToTop";
@@ -18,7 +18,7 @@ export default function HomeScreen() {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   }
   
-  const { treeList, isLoading, sortOrder, updateSortOrder, loadMoreTrees, retryGetTrees, error } = useTreeList();
+  const { treeList, isLoading, sortOrder, updateSortOrder, setSearchText, loadMoreTrees, retryGetTrees, error } = useTreeList();
 
   const router = useRouter();
   const openTreeDetail = (id: string, label: string) => {
@@ -36,7 +36,7 @@ export default function HomeScreen() {
       <FlatList
         ListHeaderComponent={
           <View style={styles.headerContainer}>
-            <SearchBar />
+            <SearchBar setSearchText={setSearchText}/>
             <SortBox sortOrder={sortOrder} updateSortOrder={updateSortOrder} />
           </View>
         }
@@ -45,6 +45,7 @@ export default function HomeScreen() {
         style={styles.scrollView}
         contentContainerStyle={styles.container}
         keyExtractor={(item) => String(item.idbase)}
+        ListEmptyComponent={(!isLoading && !error) ? <Text style={styles.emptyElement}>Aucun arbre trouvé</Text> : <></>}
         onEndReached={loadMoreTrees}
         onEndReachedThreshold={0.5}
         onScroll={(event)=>{
@@ -82,4 +83,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
+  emptyElement: {
+    fontSize: 30,
+    fontWeight: "bold",
+    alignSelf: "center",
+  }
 })
