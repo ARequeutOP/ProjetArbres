@@ -1,5 +1,5 @@
 import { ApiError } from "@/src/core/errors/ApiError";
-import { fetchWithTimeout } from "@/src/data/fetchWithTimeout";
+import { fetchWithTimeout } from "@/src/data/utils/fetchWithTimeout";
 import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
 import { ApiResponseDto } from "../dto/ApiResponseDto";
 import { TreeDetailDto } from "../dto/TreeDetailDto";
