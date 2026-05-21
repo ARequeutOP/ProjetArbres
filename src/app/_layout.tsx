@@ -14,10 +14,9 @@ import { TreeApiDatasource } from "../data/datasources/TreeApiDatasource";
 const remoteDatasource = new TreeApiDatasource();
 
 // import { MockTreeDatasource } from "../data/datasources/MockTreeDatasource";
-// const remoteDatasource = new MockTreeDatasource
+// const remoteDatasource = new MockTreeDatasource();
 
 const cacheDatasource = new AsyncTreeStorageCacheDatasource();
-
 const remoteRepository = new TreeRemoteRepositoryImpl(remoteDatasource);
 const cacheRepository = new TreeCacheRepositoryImpl(cacheDatasource);
 const getTreeListUseCase = new GetTreeListUseCase(remoteRepository, cacheRepository);

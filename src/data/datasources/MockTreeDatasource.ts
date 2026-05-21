@@ -1,4 +1,4 @@
-import { MOCK_API_ERROR, MOCK_DELAY, MOCK_NETWORK_ERROR, MOCK_TIMEOUT, MOCK_TREE_NOT_FOUND_ERROR } from "@/src/config/mock";
+import { MOCK_API_ERROR, MOCK_DELAY, MOCK_NETWORK_ERROR, MOCK_TIMEOUT, MOCK_TREE_NOT_FOUND_ERROR } from "@/src/core/config/mock";
 import { ApiError } from "@/src/core/errors/ApiError";
 import { NetworkError } from "@/src/core/errors/NetworkError";
 import { TimeoutError } from "@/src/core/errors/TimeoutError";
@@ -13,7 +13,7 @@ const MOCK_TREE_INFO = {
     libellefrancais: "Pommier",
     espece: "Reinette du Mans",
     adresse: "Paris",
-    circonferenceencm: 40,
+    circonferenceencm: 50,
     hauteurenm: 3,
     stadedeveloppement: "Jeune",
     geo_point_2d: {
