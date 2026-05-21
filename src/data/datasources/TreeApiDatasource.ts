@@ -35,7 +35,7 @@ export class TreeApiDatasource implements ITreeRemoteDatasource {
 
         const searchTextUrlString =
             queryParams.searchText !== undefined && queryParams.searchText !== ""
-            ? `&where=search(libellefrancais,%20"${queryParams.searchText}")`
+            ? `&where=search(libellefrancais,%20%22${queryParams.searchText}%22)`
             : "";
 
         const offsetUrlString =
@@ -50,7 +50,6 @@ export class TreeApiDatasource implements ITreeRemoteDatasource {
             `&limit=${queryParams.limit}`+
             orderUrlString+
             offsetUrlString;
-        
         const response = await fetchWithTimeout(url, 5000);
         if (!response.ok) {
             throw new ApiError("API Request Failed", response.status);
