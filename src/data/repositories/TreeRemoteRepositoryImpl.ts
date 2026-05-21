@@ -1,15 +1,15 @@
 import { TreeNotFoundError } from "@/src/core/errors/TreeNotFoundError";
 import { TreeInfo } from "@/src/domain/entities/Tree";
-import { ITreeRepository } from "@/src/domain/repositories/ITreeRepository";
+import { ITreeRemoteRepository } from "@/src/domain/repositories/ITreeRemoteRepository";
 import { TreeListResult } from "@/src/domain/types/TreeListResult";
 import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
-import { ITreeDataSource } from "../datasources/ITreeDataSource";
+import { ITreeRemoteDatasource } from "../datasources/ITreeRemoteDatasource";
 
-export class TreeRepositoryImpl implements ITreeRepository {
-    constructor(private treeDatasource: ITreeDataSource) {}
+export class TreeRemoteRepositoryImpl implements ITreeRemoteRepository {
+    constructor(private treeRemoteDatasource: ITreeRemoteDatasource) {}
 
     async getTreeInfo(id: string): Promise<TreeInfo> {
-        const result = await this.treeDatasource.fetchTreeById(id);
+        const result = await this.treeRemoteDatasource.fetchTreeById(id);
         
         if (!Array.isArray(result.results) || result.results.length === 0) {
             throw new TreeNotFoundError();
@@ -32,7 +32,7 @@ export class TreeRepositoryImpl implements ITreeRepository {
     }
 
     async getTreeList(params: GetTreeListParams): Promise<TreeListResult> {
-        const result = await this.treeDatasource.fetchTrees({
+        const result = await this.treeRemoteDatasource.fetchTrees({
             offset: params.numberTreesLoaded,
             sortOrder: params.sortOrder,
             searchText: params.searchText,

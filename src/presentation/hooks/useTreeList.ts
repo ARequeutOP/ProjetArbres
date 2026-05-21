@@ -1,11 +1,11 @@
 import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
 import { useContext, useEffect, useState } from "react";
-import { TreeRepositoryContext } from "../context/TreeRepositoryContext";
+import { TreeUseCaseContext } from "../context/TreeUseCasesContext";
 
 import { Tree } from "@/src/domain/entities/Tree";
 
 export const useTreeList = () => {
-  const repository = useContext(TreeRepositoryContext);
+  const useCases = useContext(TreeUseCaseContext);
   const [treeList, setTreeList] = useState<Tree[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<unknown>(null);
@@ -15,13 +15,17 @@ export const useTreeList = () => {
   const [hasReachedEnd, setHasReachedEnd] = useState<boolean>(false);
   
   const fetchTrees = async (numberTreesLoaded: number, replace: boolean) => {
-    if (replace) setTreeList([]);
     setError(null);
     setIsLoading(true);
     try {
-      const data = await repository.getTreeList( { numberTreesLoaded, sortOrder, searchText } );
-      setTreeList(prev => [...prev, ...data.treeList]);
-      setHasReachedEnd(treeList.length < data.total_count)
+      const data = await useCases?.getTreeListUseCase.execute( { numberTreesLoaded, sortOrder, searchText } );
+      const newLength = replace ? data?.treeList.length : treeList.length + data.treeList.length;
+      setHasReachedEnd(newLength >= data.total_count);
+      if (replace) {
+        setTreeList(data.treeList);
+       } else {
+        setTreeList(prev => [...prev, ...data.treeList]);
+      }
     } catch(error) {
       setError(error);
     } finally {
@@ -30,7 +34,7 @@ export const useTreeList = () => {
   }
 
   const loadMoreTrees = async () => {
-    if (!hasLoadedOnce || !hasReachedEnd || isLoading || error) return;
+    if (!hasLoadedOnce || hasReachedEnd || isLoading || error) return;
     fetchTrees(treeList.length, false);
   }
 

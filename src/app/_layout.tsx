@@ -1,20 +1,31 @@
 import { Colors } from "@/src/core/colors";
-import { TreeRepositoryContext } from "@/src/presentation/context/TreeRepositoryContext";
+import { TreeUseCaseContext } from "@/src/presentation/context/TreeUseCasesContext";
 import { Stack } from "expo-router";
 
-import { TreeRepositoryImpl } from "@/src/data/repositories/TreeRepositoryImpl";
+import { TreeRemoteRepositoryImpl } from "@/src/data/repositories/TreeRemoteRepositoryImpl";
+
+import { TreeCacheRepositoryImpl } from "../data/repositories/TreeCacheRepositoryImpl";
+import { GetTreeInfoUseCase } from "../domain/usecases/GetTreeInfoUseCase";
+import { GetTreeListUseCase } from "../domain/usecases/GetTreeListUseCase";
+
+import { AsyncTreeStorageCacheDatasource } from "../data/datasources/AsyncStorageTreeCacheDatasource";
 
 import { TreeApiDatasource } from "../data/datasources/TreeApiDatasource";
-const datasource = new TreeApiDatasource();
+const remoteDatasource = new TreeApiDatasource();
 
 // import { MockTreeDatasource } from "../data/datasources/MockTreeDatasource";
-// const datasource = new MockTreeDatasource
+// const remoteDatasource = new MockTreeDatasource
 
-const repository = new TreeRepositoryImpl(datasource);
+const cacheDatasource = new AsyncTreeStorageCacheDatasource();
+
+const remoteRepository = new TreeRemoteRepositoryImpl(remoteDatasource);
+const cacheRepository = new TreeCacheRepositoryImpl(cacheDatasource);
+const getTreeListUseCase = new GetTreeListUseCase(remoteRepository, cacheRepository);
+const getTreeInfoUseCase = new GetTreeInfoUseCase(remoteRepository, cacheRepository);
 
 export default function RootLayout() {
   return (
-    <TreeRepositoryContext.Provider value={repository}>
+    <TreeUseCaseContext.Provider value={{getTreeListUseCase, getTreeInfoUseCase}}>
       <Stack
         screenOptions={{
           headerStyle: {
@@ -28,6 +39,6 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: "Home" }} />
         <Stack.Screen name="tree-detail" options={{ title: "Tree" }} />
       </Stack>
-    </TreeRepositoryContext.Provider>
+    </TreeUseCaseContext.Provider>
   )
 }

@@ -6,7 +6,7 @@ import { ApiResponseDto } from "../dto/ApiResponseDto";
 import { TreeDetailDto } from "../dto/TreeDetailDto";
 import { TreeListItemDto } from "../dto/TreeListItemDto";
 import { TreeQueryParams } from "../dto/TreeQueryParams";
-import { ITreeDataSource } from "./ITreeDataSource";
+import { ITreeRemoteDatasource } from "./ITreeRemoteDatasource";
 
 const MOCK_TREE_INFO = {
     idbase: 1,
@@ -34,7 +34,7 @@ const MOCK_TREE_LIST = [
         }
 ];
 
-export class MockTreeDatasource implements ITreeDataSource {
+export class MockTreeDatasource implements ITreeRemoteDatasource {
 
     async fetchTreeById(id: string): Promise<ApiResponseDto<TreeDetailDto>> { 
         await this.simulateDelay(MOCK_DELAY);       
