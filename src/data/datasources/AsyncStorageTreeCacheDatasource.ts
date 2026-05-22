@@ -1,12 +1,11 @@
+import { ITreeCacheDatasource } from "@/src/framework/datasources/ITreeCacheDatasource";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ApiResponseDto } from "../dto/ApiResponseDto";
-import { TreeDetailDto } from "../dto/TreeDetailDto";
-import { TreeListItemDto } from "../dto/TreeListItemDto";
-import { TreeQueryParams } from "../dto/TreeQueryParams";
-import { CacheEntry } from "../types/CacheEntry";
+import { CacheEntry } from "../../framework/cache/CacheEntry";
+import { ApiResponseDto } from "../../framework/dto/ApiResponseDto";
+import { TreeDetailDto } from "../../framework/dto/TreeDetailDto";
+import { TreeListItemDto } from "../../framework/dto/TreeListItemDto";
+import { TreeQueryParams } from "../../framework/query/TreeQueryParams";
 import { buildTreeDetailCacheKey, buildTreeListCacheKey } from "../utils/treeCacheKeys";
-import { ITreeCacheDatasource } from "./ITreeCacheDatasource";
-
 
 export class AsyncTreeStorageCacheDatasource implements ITreeCacheDatasource {
     async fetchTrees(queryParams: TreeQueryParams): Promise<CacheEntry<ApiResponseDto<TreeListItemDto>> | null> {

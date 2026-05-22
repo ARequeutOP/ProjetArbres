@@ -1,7 +1,7 @@
-import { CACHE_TREE_INFO_DURATION } from "@/src/core/config/constants";
-import { TreeInfo } from "../entities/Tree";
-import { ITreeCacheRepository } from "../repositories/ITreeCacheRepository";
-import { ITreeRemoteRepository } from "../repositories/ITreeRemoteRepository";
+import { CACHE_TREE_INFO_DURATION } from "@/src/framework/cache/cacheConstants";
+import { TreeInfo } from "@/src/framework/models/TreeInfo";
+import { ITreeCacheRepository } from "@/src/framework/repositories/ITreeCacheRepository";
+import { ITreeRemoteRepository } from "@/src/framework/repositories/ITreeRemoteRepository";
 
 export class GetTreeInfoUseCase {
     constructor(

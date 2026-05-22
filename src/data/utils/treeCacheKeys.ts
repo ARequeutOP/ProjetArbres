@@ -1,4 +1,4 @@
-import { TreeQueryParams } from "../dto/TreeQueryParams"
+import { TreeQueryParams } from "../../framework/query/TreeQueryParams"
 
 export const buildTreeListCacheKey = (queryParams: TreeQueryParams) => {
     return (

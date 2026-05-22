@@ -1,6 +1,6 @@
-import { Colors } from "@/src/core/colors";
 import { TreeUseCaseContext } from "@/src/presentation/context/TreeUseCasesContext";
 import { Stack } from "expo-router";
+import { Colors } from "../presentation/colors";
 
 import { TreeRemoteRepositoryImpl } from "@/src/data/repositories/TreeRemoteRepositoryImpl";
 

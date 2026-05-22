@@ -1,4 +1,4 @@
-import { SortOrder } from '@/src/domain/usecases/types/GetTreeListParams';
+import { SortOrder } from '@/src/framework/query/SortOrder';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Pressable } from 'react-native';
 

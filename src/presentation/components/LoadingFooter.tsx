@@ -1,6 +1,6 @@
-import { Colors } from '@/src/core/colors';
 import Entypo from '@expo/vector-icons/Entypo';
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
+import { Colors } from '../colors';
 import ErrorBox from './ErrorBox';
 
 type Props = {

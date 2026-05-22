@@ -1,4 +1,4 @@
-import { Tree } from "../entities/Tree";
+import { Tree } from "./Tree";
 
 export type TreeListResult = {
     total_count: number;

@@ -1,9 +1,9 @@
-import { TreeNotFoundError } from "@/src/core/errors/TreeNotFoundError";
-import { TreeInfo } from "@/src/domain/entities/Tree";
-import { ITreeRemoteRepository } from "@/src/domain/repositories/ITreeRemoteRepository";
-import { TreeListResult } from "@/src/domain/types/TreeListResult";
-import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
-import { ITreeRemoteDatasource } from "../datasources/ITreeRemoteDatasource";
+import { ITreeRemoteDatasource } from "@/src/framework/datasources/ITreeRemoteDatasource";
+import { TreeNotFoundError } from "@/src/framework/errors/TreeNotFoundError";
+import { TreeInfo } from "@/src/framework/models/TreeInfo";
+import { TreeListResult } from "@/src/framework/models/TreeListResult";
+import { GetTreeListParams } from "@/src/framework/query/GetTreeListParams";
+import { ITreeRemoteRepository } from "@/src/framework/repositories/ITreeRemoteRepository";
 
 export class TreeRemoteRepositoryImpl implements ITreeRemoteRepository {
     constructor(private treeRemoteDatasource: ITreeRemoteDatasource) {}

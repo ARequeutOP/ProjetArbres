@@ -1,7 +1,7 @@
-import { Colors } from "@/src/core/colors";
 import { Stack } from "expo-router";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { Colors } from "../colors";
 import ErrorBox from "../components/ErrorBox";
 import InfoBox from "../components/InfoBox";
 import { useTreeInfo } from "../hooks/useTreeInfo";

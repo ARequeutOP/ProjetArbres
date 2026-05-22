@@ -1,8 +1,4 @@
-export interface Tree {
-  idbase: number;
-  libellefrancais: string;
-  espece: string;
-}
+import { Tree } from "./Tree";
 
 export interface TreeInfo extends Tree{
     adresse: string;

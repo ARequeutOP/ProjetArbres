@@ -1,10 +1,10 @@
-import { TreeInfo } from "@/src/domain/entities/Tree";
-import { ITreeCacheRepository } from "@/src/domain/repositories/ITreeCacheRepository";
-import { TreeListResult } from "@/src/domain/types/TreeListResult";
-import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams";
-import { ITreeCacheDatasource } from "../datasources/ITreeCacheDatasource";
+import { ITreeCacheDatasource } from "@/src/framework/datasources/ITreeCacheDatasource";
+import { TreeInfo } from "@/src/framework/models/TreeInfo";
+import { TreeListResult } from "@/src/framework/models/TreeListResult";
+import { GetTreeListParams } from "@/src/framework/query/GetTreeListParams";
+import { ITreeCacheRepository } from "@/src/framework/repositories/ITreeCacheRepository";
+import { CacheEntry } from "../../framework/cache/CacheEntry";
 import { toTreeQueryParams } from "../mappers/toTreeQueryParams";
-import { CacheEntry } from "../types/CacheEntry";
 
 export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
     constructor(private treeCacheDatasource: ITreeCacheDatasource) {}

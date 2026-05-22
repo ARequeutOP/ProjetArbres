@@ -1,5 +1,5 @@
-import { GetTreeListParams } from "@/src/domain/usecases/types/GetTreeListParams"
-import { TreeQueryParams } from "../dto/TreeQueryParams"
+import { GetTreeListParams } from "@/src/framework/query/GetTreeListParams"
+import { TreeQueryParams } from "../../framework/query/TreeQueryParams"
 
 export const toTreeQueryParams = (params: GetTreeListParams): TreeQueryParams => {
     return {

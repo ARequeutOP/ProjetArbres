@@ -1,4 +1,4 @@
-import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
+import { SortOrder } from "./SortOrder";
 
 export type TreeQueryParams = {
     offset?: number;

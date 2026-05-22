@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { TreeInfo } from "@/src/domain/entities/Tree";
+import { TreeInfo } from "@/src/framework/models/TreeInfo";
 import { TreeUseCaseContext } from "../context/TreeUseCasesContext";
 export const useTreeInfo = (id: string) => {
     const useCases = useContext(TreeUseCaseContext);
@@ -13,6 +13,7 @@ export const useTreeInfo = (id: string) => {
         setError(null);
         try {
             const data = await useCases?.getTreeInfoUseCase.execute(id);
+            if (!data) return;
             setTreeInfo(data);
         } catch(error) {
             setError(error);

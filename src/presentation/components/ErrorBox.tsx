@@ -1,6 +1,6 @@
-import { Colors } from "@/src/core/colors";
-import { getErrorMessage } from "@/src/presentation/getErrorMessage";
 import { StyleSheet, Text, View } from "react-native";
+import { Colors } from "../colors";
+import { getErrorMessage } from "../getErrorMessage";
 
 type Props = {
     error: unknown;

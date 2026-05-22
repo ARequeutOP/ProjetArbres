@@ -2,13 +2,13 @@ import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Colors } from "@/src/core/colors";
-import BackToTop from "@/src/presentation/components/BackToTop";
-import TreeCard from "@/src/presentation/components/TreeCard";
-import { useTreeList } from "@/src/presentation/hooks/useTreeList";
+import { Colors } from "../colors";
+import BackToTop from "../components/BackToTop";
 import LoadingFooter from "../components/LoadingFooter";
 import SearchBar from "../components/SearchBar";
 import SortBox from "../components/SortBox";
+import TreeCard from "../components/TreeCard";
+import { useTreeList } from "../hooks/useTreeList";
 
 export default function HomeScreen() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);

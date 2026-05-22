@@ -1,8 +1,8 @@
-import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
+import { SortOrder } from "@/src/framework/query/SortOrder";
 import { useContext, useEffect, useState } from "react";
 import { TreeUseCaseContext } from "../context/TreeUseCasesContext";
 
-import { Tree } from "@/src/domain/entities/Tree";
+import { Tree } from "@/src/framework/models/Tree";
 
 export const useTreeList = () => {
   const useCases = useContext(TreeUseCaseContext);
@@ -19,6 +19,7 @@ export const useTreeList = () => {
     setIsLoading(true);
     try {
       const data = await useCases?.getTreeListUseCase.execute( { numberTreesLoaded, sortOrder, searchText } );
+      if (!data) return;
       const newLength = replace ? data?.treeList.length : treeList.length + data.treeList.length;
       setHasReachedEnd(newLength >= data.total_count);
       if (replace) {

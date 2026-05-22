@@ -1,5 +1,5 @@
-import { Colors } from "@/src/core/colors";
 import { StyleSheet, Text, View } from "react-native";
+import { Colors } from "../colors";
 
 type Props = {
     keyLabel: string;

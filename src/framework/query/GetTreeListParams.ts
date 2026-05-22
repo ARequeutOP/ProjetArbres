@@ -1,8 +1,4 @@
-export enum SortOrder {
-    ASC,
-    DESC,
-    DEFAULT,
-}
+import { SortOrder } from "./SortOrder";
 
 export type GetTreeListParams = {
     numberTreesLoaded: number;

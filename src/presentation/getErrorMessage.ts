@@ -1,7 +1,7 @@
-import { ApiError } from "@/src/core/errors/ApiError";
-import { NetworkError } from "@/src/core/errors/NetworkError";
-import { TimeoutError } from "@/src/core/errors/TimeoutError";
-import { TreeNotFoundError } from "../core/errors/TreeNotFoundError";
+import { ApiError } from "@/src/framework/errors/ApiError";
+import { NetworkError } from "@/src/framework/errors/NetworkError";
+import { TimeoutError } from "@/src/framework/errors/TimeoutError";
+import { TreeNotFoundError } from "../framework/errors/TreeNotFoundError";
 
 export const getErrorMessage = (error: unknown) => {
     if (error instanceof TimeoutError) {

@@ -1,12 +1,12 @@
-import { MOCK_API_ERROR, MOCK_DELAY, MOCK_NETWORK_ERROR, MOCK_TIMEOUT, MOCK_TREE_NOT_FOUND_ERROR } from "@/src/core/config/mock";
-import { ApiError } from "@/src/core/errors/ApiError";
-import { NetworkError } from "@/src/core/errors/NetworkError";
-import { TimeoutError } from "@/src/core/errors/TimeoutError";
-import { ApiResponseDto } from "../dto/ApiResponseDto";
-import { TreeDetailDto } from "../dto/TreeDetailDto";
-import { TreeListItemDto } from "../dto/TreeListItemDto";
-import { TreeQueryParams } from "../dto/TreeQueryParams";
-import { ITreeRemoteDatasource } from "./ITreeRemoteDatasource";
+import { MOCK_API_ERROR, MOCK_DELAY, MOCK_NETWORK_ERROR, MOCK_TIMEOUT, MOCK_TREE_NOT_FOUND_ERROR } from "@/src/framework/config/mock";
+import { ITreeRemoteDatasource } from "@/src/framework/datasources/ITreeRemoteDatasource";
+import { ApiError } from "@/src/framework/errors/ApiError";
+import { NetworkError } from "@/src/framework/errors/NetworkError";
+import { TimeoutError } from "@/src/framework/errors/TimeoutError";
+import { ApiResponseDto } from "../../framework/dto/ApiResponseDto";
+import { TreeDetailDto } from "../../framework/dto/TreeDetailDto";
+import { TreeListItemDto } from "../../framework/dto/TreeListItemDto";
+import { TreeQueryParams } from "../../framework/query/TreeQueryParams";
 
 const MOCK_TREE_INFO = {
     idbase: 1,

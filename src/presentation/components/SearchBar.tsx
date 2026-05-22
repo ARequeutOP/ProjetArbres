@@ -1,7 +1,7 @@
-import { Colors } from '@/src/core/colors';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useState } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Colors } from '../colors';
 
 type Props = {
     setSearchText: (searchText: string) => void;

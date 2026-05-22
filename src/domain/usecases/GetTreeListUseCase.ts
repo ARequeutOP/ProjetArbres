@@ -1,8 +1,8 @@
-import { CACHE_TREE_LIST_DURATION } from "@/src/core/config/constants";
-import { ITreeCacheRepository } from "../repositories/ITreeCacheRepository";
-import { ITreeRemoteRepository } from "../repositories/ITreeRemoteRepository";
-import { TreeListResult } from "../types/TreeListResult";
-import { GetTreeListParams } from "./types/GetTreeListParams";
+import { CACHE_TREE_LIST_DURATION } from "@/src/framework/cache/cacheConstants";
+import { ITreeCacheRepository } from "@/src/framework/repositories/ITreeCacheRepository";
+import { ITreeRemoteRepository } from "@/src/framework/repositories/ITreeRemoteRepository";
+import { TreeListResult } from "../../framework/models/TreeListResult";
+import { GetTreeListParams } from "../../framework/query/GetTreeListParams";
 
 export class GetTreeListUseCase {
     constructor(

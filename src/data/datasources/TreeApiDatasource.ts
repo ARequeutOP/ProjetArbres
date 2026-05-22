@@ -1,11 +1,11 @@
-import { ApiError } from "@/src/core/errors/ApiError";
 import { fetchWithTimeout } from "@/src/data/utils/fetchWithTimeout";
-import { SortOrder } from "@/src/domain/usecases/types/GetTreeListParams";
-import { ApiResponseDto } from "../dto/ApiResponseDto";
-import { TreeDetailDto } from "../dto/TreeDetailDto";
-import { TreeListItemDto } from "../dto/TreeListItemDto";
-import { TreeQueryParams } from "../dto/TreeQueryParams";
-import { ITreeRemoteDatasource } from "./ITreeRemoteDatasource";
+import { ITreeRemoteDatasource } from "@/src/framework/datasources/ITreeRemoteDatasource";
+import { ApiError } from "@/src/framework/errors/ApiError";
+import { SortOrder } from "@/src/framework/query/SortOrder";
+import { ApiResponseDto } from "../../framework/dto/ApiResponseDto";
+import { TreeDetailDto } from "../../framework/dto/TreeDetailDto";
+import { TreeListItemDto } from "../../framework/dto/TreeListItemDto";
+import { TreeQueryParams } from "../../framework/query/TreeQueryParams";
 
 export class TreeApiDatasource implements ITreeRemoteDatasource {
     async fetchTreeById(id: string): Promise<ApiResponseDto<TreeDetailDto>> {

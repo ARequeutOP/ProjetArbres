@@ -1,7 +1,7 @@
-import { CacheEntry } from "@/src/data/types/CacheEntry";
-import { TreeInfo } from "@/src/domain/entities/Tree";
-import { TreeListResult } from "../types/TreeListResult";
-import { GetTreeListParams } from "../usecases/types/GetTreeListParams";
+import { CacheEntry } from "../cache/CacheEntry";
+import { TreeInfo } from "../models/TreeInfo";
+import { TreeListResult } from "../models/TreeListResult";
+import { GetTreeListParams } from "../query/GetTreeListParams";
 
 export interface ITreeCacheRepository {
     getTreeList(params: GetTreeListParams): Promise<CacheEntry<TreeListResult> | null>;

@@ -1,8 +1,8 @@
+import { CacheEntry } from "../cache/CacheEntry";
 import { ApiResponseDto } from "../dto/ApiResponseDto";
 import { TreeDetailDto } from "../dto/TreeDetailDto";
 import { TreeListItemDto } from "../dto/TreeListItemDto";
-import { TreeQueryParams } from "../dto/TreeQueryParams";
-import { CacheEntry } from "../types/CacheEntry";
+import { TreeQueryParams } from "../query/TreeQueryParams";
 
 export interface ITreeCacheDatasource {
     fetchTrees(queryParams: TreeQueryParams): Promise<CacheEntry<ApiResponseDto<TreeListItemDto>> | null>;
