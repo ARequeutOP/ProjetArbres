@@ -7,7 +7,7 @@ import { TreeDetailDto } from "../../framework/dto/TreeDetailDto";
 import { TreeListItemDto } from "../../framework/dto/TreeListItemDto";
 import { TreeQueryParams } from "../../framework/query/TreeQueryParams";
 
-export class TreeApiDatasource implements ITreeRemoteDatasource {
+export const TreeApiDatasource: ITreeRemoteDatasource = {
     async fetchTreeById(id: string): Promise<ApiResponseDto<TreeDetailDto>> {
         const url =
             `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records`+
@@ -20,7 +20,7 @@ export class TreeApiDatasource implements ITreeRemoteDatasource {
         }
         const result: ApiResponseDto<TreeDetailDto> = await response.json();
         return result
-    }
+    },
     async fetchTrees(queryParams: TreeQueryParams): Promise<ApiResponseDto<TreeListItemDto>>  {
 
         let orderUrlString = "";
@@ -56,5 +56,5 @@ export class TreeApiDatasource implements ITreeRemoteDatasource {
         }
         const result: ApiResponseDto<TreeListItemDto> = await response.json();
         return result;
-    }
+    },
 }

@@ -1,4 +1,5 @@
-import { ITreeCacheDatasource } from "@/src/framework/datasources/ITreeCacheDatasource";
+import { ITreeCacheDatasource, TreeCacheDatasourceKey } from "@/src/framework/datasources/ITreeCacheDatasource";
+import { container } from "@/src/framework/di/registerDependencies";
 import { TreeInfo } from "@/src/framework/models/TreeInfo";
 import { TreeListResult } from "@/src/framework/models/TreeListResult";
 import { GetTreeListParams } from "@/src/framework/query/GetTreeListParams";
@@ -6,9 +7,9 @@ import { ITreeCacheRepository } from "@/src/framework/repositories/ITreeCacheRep
 import { CacheEntry } from "../../framework/cache/CacheEntry";
 import { toTreeQueryParams } from "../mappers/toTreeQueryParams";
 
-export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
-    constructor(private treeCacheDatasource: ITreeCacheDatasource) {}
+export const TreeCacheRepositoryImpl: ITreeCacheRepository = {
     saveTreeList(params: GetTreeListParams, data: TreeListResult): Promise<void> {
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
         const dto = {
             total_count: data.total_count,
             results: data.treeList.map((tree) => ({
@@ -18,9 +19,10 @@ export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
             })),
         };
         const queryParams = toTreeQueryParams(params);
-        return this.treeCacheDatasource.saveTreeList(queryParams, dto);
-    }
+        return treeCacheDatasource.saveTreeList(queryParams, dto);
+    },
     saveTreeDetail(id: string, data: TreeInfo): Promise<void> {
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
         const dto = {
             total_count: 1,
             results: [{
@@ -37,21 +39,25 @@ export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
                 },
             }]
         };
-        return this.treeCacheDatasource.saveTreeDetail(id, dto);
-    }
+        return treeCacheDatasource.saveTreeDetail(id, dto);
+    },
     clearAll(): Promise<void> {
-        return this.treeCacheDatasource.clearAll();
-    }
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
+        return treeCacheDatasource.clearAll();
+    },
     clearTreeList(params: GetTreeListParams): Promise<void> {
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
         const queryParams = toTreeQueryParams(params)
-        return this.treeCacheDatasource.clearTreeList(queryParams);
-    }
+        return treeCacheDatasource.clearTreeList(queryParams);
+    },
     clearTreeDetail(id: string): Promise<void> {
-        return this.treeCacheDatasource.clearTreeDetail(id);
-    }
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
+        return treeCacheDatasource.clearTreeDetail(id);
+    },
 
     async getTreeInfo(id: string): Promise<CacheEntry<TreeInfo> | null> {
-        const result = await this.treeCacheDatasource.fetchTreeById(id);
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
+        const result = await treeCacheDatasource.fetchTreeById(id);
         
         if (!result || !Array.isArray(result.data.results) || result.data.results.length === 0) {
             return null
@@ -74,11 +80,12 @@ export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
                 },
             },
         };
-    }
+    },
 
     async getTreeList(params: GetTreeListParams): Promise<CacheEntry<TreeListResult> | null> {
+        const treeCacheDatasource = container.resolve<ITreeCacheDatasource>(TreeCacheDatasourceKey);
         const queryParams = toTreeQueryParams(params);
-        const result = await this.treeCacheDatasource.fetchTrees(queryParams);
+        const result = await treeCacheDatasource.fetchTrees(queryParams);
 
         if (!result) return null;
 
@@ -94,5 +101,5 @@ export class TreeCacheRepositoryImpl implements ITreeCacheRepository {
                 }))
             },
         };
-    }
+    },
 }

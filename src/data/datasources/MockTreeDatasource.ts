@@ -7,6 +7,7 @@ import { ApiResponseDto } from "../../framework/dto/ApiResponseDto";
 import { TreeDetailDto } from "../../framework/dto/TreeDetailDto";
 import { TreeListItemDto } from "../../framework/dto/TreeListItemDto";
 import { TreeQueryParams } from "../../framework/query/TreeQueryParams";
+import { simulateDelay } from "../utils/simulateDelay";
 
 const MOCK_TREE_INFO = {
     idbase: 1,
@@ -34,10 +35,9 @@ const MOCK_TREE_LIST = [
         }
 ];
 
-export class MockTreeDatasource implements ITreeRemoteDatasource {
-
+export const MockTreeDatasource: ITreeRemoteDatasource = {
     async fetchTreeById(id: string): Promise<ApiResponseDto<TreeDetailDto>> { 
-        await this.simulateDelay(MOCK_DELAY);       
+        await simulateDelay(MOCK_DELAY);       
         if (MOCK_NETWORK_ERROR) throw new NetworkError();
         if (MOCK_TIMEOUT) throw new TimeoutError();
         if (MOCK_API_ERROR) throw new ApiError("Tree Not Found", 404);
@@ -51,10 +51,9 @@ export class MockTreeDatasource implements ITreeRemoteDatasource {
             total_count: 1,
             results: [MOCK_TREE_INFO],
         };
-    }
-
+    },
     async fetchTrees(queryParams: TreeQueryParams): Promise<ApiResponseDto<TreeListItemDto>>  {
-        await this.simulateDelay(MOCK_DELAY);
+        await simulateDelay(MOCK_DELAY);
         if (MOCK_NETWORK_ERROR) throw new NetworkError();
         if (MOCK_TIMEOUT) throw new TimeoutError();
         if (MOCK_API_ERROR) throw new ApiError("Tree Not Found", 404);
@@ -62,11 +61,6 @@ export class MockTreeDatasource implements ITreeRemoteDatasource {
             total_count: 2,
             results: MOCK_TREE_LIST,
         };
-    }
-
-    private async simulateDelay(delay: number) {
-        await new Promise(resolve => setTimeout(resolve, delay)
-    );
-}
+    },
 }
 

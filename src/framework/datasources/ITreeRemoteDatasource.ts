@@ -7,3 +7,5 @@ export interface ITreeRemoteDatasource {
     fetchTrees(queryParams: TreeQueryParams): Promise<ApiResponseDto<TreeListItemDto>>;
     fetchTreeById(id: string): Promise<ApiResponseDto<TreeDetailDto>>;
 }
+
+export const TreeRemoteDatasourceKey = "TreeRemoteDatasourceKey";

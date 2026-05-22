@@ -13,3 +13,5 @@ export interface ITreeCacheDatasource {
     clearTreeList(queryParams: TreeQueryParams): Promise<void>;
     clearTreeDetail(id: string): Promise<void>;
 }
+
+export const TreeCacheDatasourceKey = "TreeCacheDatasourceKey";

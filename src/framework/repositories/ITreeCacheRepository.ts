@@ -12,3 +12,5 @@ export interface ITreeCacheRepository {
     clearTreeList(params: GetTreeListParams): Promise<void>;
     clearTreeDetail(id: string): Promise<void>;
 }
+
+export const TreeCacheRepositoryKey = "TreeCacheRepositoryKey";

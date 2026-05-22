@@ -1,15 +1,15 @@
-import { ITreeRemoteDatasource } from "@/src/framework/datasources/ITreeRemoteDatasource";
+import { ITreeRemoteDatasource, TreeRemoteDatasourceKey } from "@/src/framework/datasources/ITreeRemoteDatasource";
+import { container } from "@/src/framework/di/registerDependencies";
 import { TreeNotFoundError } from "@/src/framework/errors/TreeNotFoundError";
 import { TreeInfo } from "@/src/framework/models/TreeInfo";
 import { TreeListResult } from "@/src/framework/models/TreeListResult";
 import { GetTreeListParams } from "@/src/framework/query/GetTreeListParams";
 import { ITreeRemoteRepository } from "@/src/framework/repositories/ITreeRemoteRepository";
 
-export class TreeRemoteRepositoryImpl implements ITreeRemoteRepository {
-    constructor(private treeRemoteDatasource: ITreeRemoteDatasource) {}
-
+export const TreeRemoteRepositoryImpl: ITreeRemoteRepository = {
     async getTreeInfo(id: string): Promise<TreeInfo> {
-        const result = await this.treeRemoteDatasource.fetchTreeById(id);
+        const treeRemoteDatasource = container.resolve<ITreeRemoteDatasource>(TreeRemoteDatasourceKey)
+        const result = await treeRemoteDatasource.fetchTreeById(id);
         
         if (!Array.isArray(result.results) || result.results.length === 0) {
             throw new TreeNotFoundError();
@@ -29,10 +29,11 @@ export class TreeRemoteRepositoryImpl implements ITreeRemoteRepository {
                 lat: 0,
             },
         };
-    }
+    },
 
     async getTreeList(params: GetTreeListParams): Promise<TreeListResult> {
-        const result = await this.treeRemoteDatasource.fetchTrees({
+        const treeRemoteDatasource = container.resolve<ITreeRemoteDatasource>(TreeRemoteDatasourceKey)
+        const result = await treeRemoteDatasource.fetchTrees({
             offset: params.numberTreesLoaded,
             sortOrder: params.sortOrder,
             searchText: params.searchText,
@@ -48,5 +49,5 @@ export class TreeRemoteRepositoryImpl implements ITreeRemoteRepository {
                 espece: dto.espece ?? "",
             }))
         };
-    }
+    },
 }

@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { GetTreeInfoUseCaseKey, IGetTreeInfoUseCase } from "@/src/domain/GetTreeInfo/GetTreeInfoUseCase";
+import { container } from "@/src/framework/di/registerDependencies";
+import { useEffect, useState } from "react";
 
 import { TreeInfo } from "@/src/framework/models/TreeInfo";
-import { TreeUseCaseContext } from "../context/TreeUseCasesContext";
 export const useTreeInfo = (id: string) => {
-    const useCases = useContext(TreeUseCaseContext);
     const [treeInfo, setTreeInfo] = useState<TreeInfo | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<unknown>(null);
@@ -12,7 +12,7 @@ export const useTreeInfo = (id: string) => {
         setIsLoading(true);
         setError(null);
         try {
-            const data = await useCases?.getTreeInfoUseCase.execute(id);
+            const data = await container.resolve<IGetTreeInfoUseCase>(GetTreeInfoUseCaseKey).execute({id: id});
             if (!data) return;
             setTreeInfo(data);
         } catch(error) {

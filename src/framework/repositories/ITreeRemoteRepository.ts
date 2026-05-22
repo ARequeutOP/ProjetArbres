@@ -6,3 +6,5 @@ export interface ITreeRemoteRepository {
     getTreeList(params: GetTreeListParams): Promise<TreeListResult>;
     getTreeInfo(id: string): Promise<TreeInfo>;
 }
+
+export const TreeRemoteRepositoryKey = "TreeRemoteRepositoryKey";
