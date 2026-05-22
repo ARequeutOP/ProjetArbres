@@ -16,23 +16,35 @@
 
 ## App description
 
-- Print a list of 20 trees from the Paris Open Data API
-- Get tree details on a new page (species, height, circumference, address, map)
+Mobile application built with Expo and React Native using the Paris Open Data API.
+
+### Features
+- Display a paginated list of trees from the Paris Open Data API
+- Infinite scroll loading
+- Tree detail screen:
+   - species
+   - height
+   - circumference
+   - address
+   - coordinates
+- Sort trees alphabetically (ASC / DESC)
+- Search trees by name
+- Local persistent cache using AsyncStorage
+- Mock mode for development and testing
 
 ## Error handling
 
-The app includes a mock system to simulate errors without touching the real API.
+The app includes a mock system to simulate errors and loading states without touching the real API.
 
-To enable it, open `config/mock.ts` and set `USE_MOCK = true`, then select the scenario:
+Mock configuration is handled in `app/_layout.tsx`.
+
+To enable it, import and use `MockTreeDatasource` instead of `TreeApiDatasource`:
 
 ```typescript
-export const USE_MOCK = true;    // enable mock mode
-export const MOCK_ERROR = false; // simulate a network error
-export const MOCK_TIMEOUT = false; // simulate a timeout error
-```
+export const MOCK_NETWORK_ERROR = false;
+export const MOCK_TIMEOUT = false;
+export const MOCK_API_ERROR = false;
+export const MOCK_TREE_NOT_FOUND_ERROR = false;
 
-| `MOCK_ERROR` | `MOCK_TIMEOUT` | Result |
-|---|---|---|
-| `false` | `false` | Mock data returned |
-| `true` | `false` | Network error displayed |
-| `false` | `true` | Timeout error displayed |
+export const MOCK_DELAY = 2000;
+```
