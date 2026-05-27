@@ -16,6 +16,10 @@ export const TreeCacheRepositoryImpl: ITreeCacheRepository = {
                 idbase: tree.idbase,
                 libellefrancais: tree.libellefrancais,
                 espece: tree.espece,
+                geo_point_2d: {
+                    lon: tree.geo_point_2d.lon,
+                    lat: tree.geo_point_2d.lat,
+                },
             })),
         };
         const queryParams = toTreeQueryParams(params);
@@ -98,6 +102,10 @@ export const TreeCacheRepositoryImpl: ITreeCacheRepository = {
                     idbase: dto.idbase,
                     libellefrancais: dto.libellefrancais ?? "",
                     espece: dto.espece ?? "",
+                    geo_point_2d: {
+                        lon: dto.geo_point_2d ? dto.geo_point_2d.lon : 0,
+                        lat: dto.geo_point_2d ? dto.geo_point_2d.lat : 0,
+                    },
                 }))
             },
         };
