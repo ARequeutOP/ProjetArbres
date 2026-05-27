@@ -7,6 +7,25 @@ export const buildMarkers = (treeList: Tree[], region: Region): MapMarker[] => {
     const cells = buildGridCells(region);
     const markers: MapMarker[] = [];
 
+    const computeCenter = (treeList: Tree[]) => {
+        const latitude =
+            treeList.reduce(
+                (sum, tree) => sum + tree.geo_point_2d.lat,
+                0
+            ) / treeList.length;
+
+        const longitude =
+            treeList.reduce(
+                (sum, tree) => sum + tree.geo_point_2d.lon,
+                0
+            ) / treeList.length;
+
+        return {
+            latitude,
+            longitude,
+        };
+    };
+
     for (const cell of cells) {
         const treesInCell = treeList.filter((tree) => {
             const lat = tree.geo_point_2d.lat;
@@ -37,12 +56,14 @@ export const buildMarkers = (treeList: Tree[], region: Region): MapMarker[] => {
             continue;
         }
 
+        const center = computeCenter(treesInCell);
+
         markers.push({
             type: "cluster",
             markerId: `${cell.row}x${cell.col}`,
             coordinate: {
-                latitude: cell.center.latitude,
-                longitude: cell.center.longitude,
+                latitude: center.latitude,
+                longitude: center.longitude,
             },
             latitudeDelta: cell.bounds.maxLat-cell.bounds.minLat,
             longitudeDelta: cell.bounds.maxLon-cell.bounds.minLon,
