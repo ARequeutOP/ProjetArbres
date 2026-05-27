@@ -45,15 +45,15 @@ export const TreeApiDatasource: ITreeRemoteDatasource = {
 
         const url =
             `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/records`+
-            `?select=idbase%2C%20libellefrancais%2C%20espece`+
+            `?select=idbase%2C%20libellefrancais%2C%20espece%2C%20geo_point_2d`+
             searchTextUrlString+
             `&limit=${queryParams.limit}`+
             orderUrlString+
             offsetUrlString;
-        const response = await fetchWithTimeout(url, 5000);
-        if (!response.ok) {
-            throw new ApiError("API Request Failed", response.status);
-        }
+            const response = await fetchWithTimeout(url, 5000);
+            if (!response.ok) {
+                throw new ApiError("API Request Failed", response.status);
+            }
         const result: ApiResponseDto<TreeListItemDto> = await response.json();
         return result;
     },

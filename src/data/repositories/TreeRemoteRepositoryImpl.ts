@@ -47,6 +47,10 @@ export const TreeRemoteRepositoryImpl: ITreeRemoteRepository = {
                 idbase: dto.idbase,
                 libellefrancais: dto.libellefrancais ?? "",
                 espece: dto.espece ?? "",
+                geo_point_2d: dto.geo_point_2d ?? {
+                    lon: 0,
+                    lat: 0,
+                },
             }))
         };
     },

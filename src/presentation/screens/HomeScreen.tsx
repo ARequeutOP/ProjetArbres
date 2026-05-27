@@ -5,6 +5,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../colors";
 import BackToTop from "../components/BackToTop";
 import LoadingFooter from "../components/LoadingFooter";
+import { MapBottomSheet } from "../components/MapBottomSheet";
 import SearchBar from "../components/SearchBar";
 import SortBox from "../components/SortBox";
 import TreeCard from "../components/TreeCard";
@@ -62,6 +63,7 @@ export default function HomeScreen() {
         }
       />
       {isScrolled && <BackToTop onPress={goBackToTop}/>}
+      <MapBottomSheet treeList={treeList}/>
     </>
   );
 }

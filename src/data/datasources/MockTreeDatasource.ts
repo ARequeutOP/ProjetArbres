@@ -28,10 +28,18 @@ const MOCK_TREE_LIST = [
         idbase: 1,
         libellefrancais: "Pommier",
         espece: "Reinette du Mans",
+        geo_point_2d: {
+            "lon":2.38,
+            "lat":48.83
+        }
     }, {
         idbase: 2,
         libellefrancais: "Pommier",
         espece: "Rubinette",
+        geo_point_2d: {
+            "lon":2.38,
+            "lat":48.83
+        }
         }
 ];
 
